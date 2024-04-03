@@ -6,11 +6,6 @@ from .models import Writer, User, Publication, Category, Article, Comment
 # Register your models here.
 
 
-class ArticleInLine(admin.StackedInline):
-    model = Article
-    extra = 1
-
-
 class CommentInLine(admin.StackedInline):
     model = Comment
     extra = 1
@@ -19,10 +14,9 @@ class CommentInLine(admin.StackedInline):
 @register(Writer)
 class WriterAdmin(admin.ModelAdmin):
     list_display = ("id", "first_name", "last_name")
-    list_display_links = ("first_name", "last_name")
+    list_display_links = ("id",)
     list_editable = ("first_name", "last_name")
     search_fields = ("first_name", "last_name")
-    inlines = (ArticleInLine,)
 
 
 @register(User)
@@ -33,7 +27,7 @@ class UserAdmin(admin.ModelAdmin):
         "date_created",
         "date_updated",
     )
-    list_display_links = ("user_name",)
+    list_display_links = ("id",)
     list_editable = ("user_name",)
     search_fields = ("user_name",)
     inlines = (CommentInLine,)
@@ -47,10 +41,9 @@ class PublicatioAdmin(admin.ModelAdmin):
         "date_created",
         "date_updated",
     )
-    list_display_links = ("pub_name",)
+    list_display_links = ("id",)
     list_editable = ("pub_name",)
     search_fields = ("pub_name",)
-    inlines = (ArticleInLine,)
 
 
 @register(Category)
@@ -62,10 +55,9 @@ class CategoryAdmin(admin.ModelAdmin):
         "date_created",
         "date_updated",
     )
-    list_display_links = ("name",)
+    list_display_links = ("id",)
     list_editable = ("name", "description")
     search_fields = ("name", "description")
-    inlines = (ArticleInLine,)
 
 
 @register(Article)
@@ -74,13 +66,10 @@ class ArticleAdmin(admin.ModelAdmin):
         "id",
         "headline",
         "summary",
-        "writer",
-        "publication",
-        "categories",
         "date_created",
         "date_updated",
     )
-    list_display_links = ("headline",)
+    list_display_links = ("id",)
     list_editable = ("headline", "summary")
     search_fields = ("headline", "summary", "writer", "publication", "categories")
     autocomplete_fields = ("writer", "publication", "categories")
@@ -96,7 +85,7 @@ class CommentAdmin(admin.ModelAdmin):
         "date_created",
         "date_updated",
     )
-    list_display_links = ("user_name_comment", "article_comment")
+    list_display_links = ("id",)
     list_editable = ("article_comment", "is_allowed")
     search_fields = ("user_name_comment", "article_comment")
     autocomplete_fields = ("user_name_comment", "article_comment")
