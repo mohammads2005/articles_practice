@@ -131,8 +131,4 @@ REST_FRAMEWORK = {
     ) if DEBUG else (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAdminUser',
-        'rest_framework.permissions.IsAuthenticated',
-    ),
 }

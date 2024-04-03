@@ -103,6 +103,7 @@ class Comment(BaseModel):
         default=False,
         verbose_name="Is Allowed",
     )
+    comment_text = models.TextField(verbose_name="Comment", default="")
 
     class Meta:
         verbose_name = "Comment"

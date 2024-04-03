@@ -7,7 +7,7 @@ from .serializers import ArticleSerializer, CommentSerializer
 
 
 class ArticleViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly)
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = ArticleSerializer
     queryset = Article.objects.all().order_by("headline")
 
@@ -17,10 +17,10 @@ class ArticleViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly)
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
     
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter)
-    filterset_fields = ("user_name_comment", "article_comment")
-    search_fields = ("user_name_comment", "article_comment")
+    filterset_fields = ("user_name_comment", "article_comment", "comment_text")
+    search_fields = ("user_name_comment", "article_comment", "comment_text")
