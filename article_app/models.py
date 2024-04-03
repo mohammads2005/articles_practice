@@ -99,6 +99,10 @@ class Comment(BaseModel):
         verbose_name="Article's Comment",
         on_delete=models.CASCADE,
     )
+    is_allowed = models.BooleanField(
+        default=False,
+        verbose_name="Is Allowed",
+    )
 
     class Meta:
         verbose_name = "Comment"

@@ -16,14 +16,18 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             "user_name",
+            "date_created",
+            "date_updated",
         )
 
 
-class PubSerializer(serializers.ModelSerializer):
+class PublicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publication
         fields = (
             "pub_name",
+            "date_created",
+            "date_updated",
         )
 
 
@@ -33,10 +37,16 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = (
             "name",
             "description",
+            "date_created",
+            "date_updated",
         )
 
 
 class ArticleSerializer(serializers.ModelSerializer):
+    writer = WriterSerializer(many=True, read_only=True)
+    publication = PublicationSerializer(many=True, read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
+
     class Meta:
         model = Article
         fields = (
@@ -45,13 +55,21 @@ class ArticleSerializer(serializers.ModelSerializer):
             "writer",
             "publication",
             "categories",
+            "date_created",
+            "date_updated",
         )
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    user_name = UserSerializer(read_only=True)
+    article = ArticleSerializer(read_only=True)
+
     class Meta:
         model = Comment
         fields = (
-            "user_name_comment",
-            "article_comment",
+            "user_name",
+            "article",
+            "is_allowed",
+            "date_created",
+            "date_updated",
         )
