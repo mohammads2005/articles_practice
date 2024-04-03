@@ -69,7 +69,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = (
             "user_name",
             "article",
-            "comment_text"
+            "comment_text",
             "is_allowed",
             "date_created",
             "date_updated",
