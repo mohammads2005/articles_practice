@@ -88,10 +88,16 @@ class Article(BaseModel):
 
 class Comment(BaseModel):
     user_name_comment = models.ForeignKey(
-        User, related_name="comment", verbose_name="User Name's Comment"
+        User,
+        related_name="comment",
+        verbose_name="User Name's Comment",
+        on_delete=models.CASCADE,
     )
     article_comment = models.ForeignKey(
-        Article, related_name="comment", verbose_name="Article's Comment"
+        Article,
+        related_name="comment",
+        verbose_name="Article's Comment",
+        on_delete=models.CASCADE,
     )
 
     class Meta:
