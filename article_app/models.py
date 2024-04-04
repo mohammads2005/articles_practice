@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -22,18 +23,6 @@ class Writer(models.Model):
         verbose_name = "Writer"
         verbose_name_plural = "Writers"
         ordering = ("first_name", "last_name")
-
-
-class User(BaseModel):
-    user_name = models.CharField(max_length=100, verbose_name="User Name")
-
-    class Meta:
-        verbose_name = "User"
-        verbose_name_plural = "Users"
-        ordering = ("user_name",)
-
-    def __str__(self) -> str:
-        return self.user_name
 
 
 class Publication(BaseModel):
@@ -87,13 +76,14 @@ class Article(BaseModel):
 
 
 class Comment(BaseModel):
-    user_name_comment = models.ForeignKey(
+    user = models.ForeignKey(
         User,
         related_name="comment",
-        verbose_name="User Name's Comment",
+        verbose_name="Comment's author",
+        default="",
         on_delete=models.CASCADE,
     )
-    article_comment = models.ForeignKey(
+    article = models.ForeignKey(
         Article,
         related_name="comment",
         verbose_name="Article's Comment",
@@ -111,4 +101,4 @@ class Comment(BaseModel):
         ordering = ("date_created",)
 
     def __str__(self) -> str:
-        return self.user_name_comment.user_name
+        return self.comment_text[:10]

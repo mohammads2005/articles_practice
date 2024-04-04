@@ -1,14 +1,14 @@
 from django.contrib import admin
 from django.contrib.admin import register
 
-from .models import Writer, User, Publication, Category, Article, Comment
+from .models import Writer, Publication, Category, Article, Comment
 
 # Register your models here.
 
 
 class CommentInLine(admin.StackedInline):
     model = Comment
-    extra = 1
+    extra = 0
 
 
 @register(Writer)
@@ -17,20 +17,6 @@ class WriterAdmin(admin.ModelAdmin):
     list_display_links = ("id",)
     list_editable = ("first_name", "last_name")
     search_fields = ("first_name", "last_name")
-
-
-@register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "user_name",
-        "date_created",
-        "date_updated",
-    )
-    list_display_links = ("id",)
-    list_editable = ("user_name",)
-    search_fields = ("user_name",)
-    inlines = (CommentInLine,)
 
 
 @register(Publication)
@@ -73,19 +59,20 @@ class ArticleAdmin(admin.ModelAdmin):
     list_editable = ("headline", "summary")
     search_fields = ("headline", "summary", "writer", "publication", "categories")
     autocomplete_fields = ("writer", "publication", "categories")
+    inlines = (CommentInLine,)
 
 
 @register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "user_name_comment",
-        "article_comment",
+        "user",
+        "article",
         "is_allowed",
         "date_created",
         "date_updated",
     )
     list_display_links = ("id",)
-    list_editable = ("article_comment", "is_allowed")
-    search_fields = ("user_name_comment", "article_comment")
-    autocomplete_fields = ("user_name_comment", "article_comment")
+    list_editable = ("article", "is_allowed")
+    search_fields = ("user", "article")
+    autocomplete_fields = ("user", "article")
